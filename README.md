@@ -1,51 +1,36 @@
-# VaadinSovellus
+# Vaadin Application
 
-This project can be used as a starting point to create your own Vaadin application with Spring Boot.
-It contains all the necessary configuration and some placeholder files to get you started.
+This project is a web application built using the Vaadin framework. It provides a modern, responsive user interface and is designed to simplify the development of Java-based web applications.
 
-## Running the application
+## Features
 
-Open the project in an IDE. You can download the [IntelliJ community edition](https://www.jetbrains.com/idea/download) if you do not have a suitable IDE already.
-Once opened in the IDE, locate the `Application` class and run the main method using "Debug".
+- **User Management**: Includes functionalities for user registration, authentication, and profile management.
+- **Dynamic UI**: Utilizes Vaadin's component-based architecture for building dynamic and interactive user interfaces.
+- **Data Handling**: Supports CRUD (Create, Read, Update, Delete) operations for managing application data.
+- **Responsive Design**: Ensures compatibility across various devices and screen sizes.
+- **Integration**: Can be integrated with backend services and databases for seamless data flow.
 
-For more information on installing in various IDEs, see [how to import Vaadin projects to different IDEs](https://vaadin.com/docs/latest/getting-started/import).
+## Getting Started
 
-If you install the Vaadin plugin for IntelliJ, you should instead launch the `Application` class using "Debug using HotswapAgent" to see updates in the Java code immediately reflected in the browser.
+1. Clone the repository to your local machine.
+2. Build the project using Maven or your preferred build tool.
+3. Deploy the application to a servlet container or application server.
+4. Access the application via your web browser.
 
-## Deploying to Production
+## Technologies Used
 
-The project is a standard Maven project. To create a production build, call 
+- **Vaadin Framework**: For building the UI.
+- **Java**: Core programming language.
+- **Maven**: For dependency management and build automation.
+- **Servlet Container**: For deploying the application.
 
-```
-./mvnw clean package -Pproduction
-```
+## How to Contribute
 
-If you have Maven globally installed, you can replace `./mvnw` with `mvn`.
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Commit your changes and push them to your fork.
+4. Submit a pull request for review.
 
-This will build a JAR file with all the dependencies and front-end resources,ready to be run. The file can be found in the `target` folder after the build completes.
-You then launch the application using 
-```
-java -jar target/vaadin-app-1.0-SNAPSHOT.jar
-```
+## License
 
-## Project structure
-
-- `MainLayout.java` in `src/main/java` contains the navigation setup (i.e., the
-  side/top bar and the main menu). This setup uses
-  [App Layout](https://vaadin.com/docs/components/app-layout).
-- `views` package in `src/main/java` contains the server-side Java views of your application.
-- `views` folder in `src/main/frontend` contains the client-side JavaScript views of your application.
-- `themes` folder in `src/main/frontend` contains the custom CSS styles.
-
-## Useful links
-
-- Read the documentation at [vaadin.com/docs](https://vaadin.com/docs).
-- Follow the tutorial at [vaadin.com/docs/latest/tutorial/overview](https://vaadin.com/docs/latest/tutorial/overview).
-- Create new projects at [start.vaadin.com](https://start.vaadin.com/).
-- Search UI components and their usage examples at [vaadin.com/docs/latest/components](https://vaadin.com/docs/latest/components).
-- View use case applications that demonstrate Vaadin capabilities at [vaadin.com/examples-and-demos](https://vaadin.com/examples-and-demos).
-- Build any UI without custom CSS by discovering Vaadin's set of [CSS utility classes](https://vaadin.com/docs/styling/lumo/utility-classes). 
-- Find a collection of solutions to common use cases at [cookbook.vaadin.com](https://cookbook.vaadin.com/).
-- Find add-ons at [vaadin.com/directory](https://vaadin.com/directory).
-- Ask questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/vaadin) or join our [Forum](https://vaadin.com/forum).
-- Report issues, create pull requests in [GitHub](https://github.com/vaadin).
+This project is licensed under the MIT License. See the `LICENSE` file for details.
