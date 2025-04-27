@@ -1,5 +1,10 @@
 package com.example.application.views.masterdetail_editable;
 
+import java.util.Optional;
+
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.vaadin.lineawesome.LineAwesomeIconUrl;
+
 import com.example.application.data.SamplePerson;
 import com.example.application.services.SamplePersonService;
 import com.vaadin.flow.component.UI;
@@ -28,10 +33,8 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
+
 import jakarta.annotation.security.RolesAllowed;
-import java.util.Optional;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 @PageTitle("Master Detail_Editable")
 @Route("master-detail_Editable/:samplePersonID?/:action?(edit)")
