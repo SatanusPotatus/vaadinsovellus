@@ -7,6 +7,7 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 import com.example.application.data.SamplePerson;
 import com.example.application.services.SamplePersonService;
+import com.example.application.views.components.Filters;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -22,6 +23,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
@@ -36,9 +38,9 @@ import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 
 import jakarta.annotation.security.RolesAllowed;
 
-@PageTitle("Master Detail_Editable")
-@Route("master-detail_Editable/:samplePersonID?/:action?(edit)")
-@Menu(order = 1, icon = LineAwesomeIconUrl.COLUMNS_SOLID)
+@PageTitle("Admin Persons View")
+@Route("admin-persons_view/:samplePersonID?/:action?(edit)")
+@Menu(order = 2, icon = LineAwesomeIconUrl.COLUMNS_SOLID)
 @RolesAllowed("ADMIN")
 @Uses(Icon.class)
 public class MasterDetail_EditableView extends Div implements BeforeEnterObserver {
@@ -47,6 +49,7 @@ public class MasterDetail_EditableView extends Div implements BeforeEnterObserve
     private final String SAMPLEPERSON_EDIT_ROUTE_TEMPLATE = "master-detail_Editable/%s/edit";
 
     private final Grid<SamplePerson> grid = new Grid<>(SamplePerson.class, false);
+    private Filters filters;
 
     private TextField firstName;
     private TextField lastName;
@@ -95,7 +98,7 @@ public class MasterDetail_EditableView extends Div implements BeforeEnterObserve
 
         grid.addColumn(importantRenderer).setHeader("Important").setAutoWidth(true);
 
-        grid.setItems(query -> samplePersonService.list(VaadinSpringDataHelpers.toSpringPageRequest(query)).stream());
+        grid.setItems(query -> samplePersonService.list(VaadinSpringDataHelpers.toSpringPageRequest(query), filters).stream());
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
 
         // when a row is selected or deselected, populate form
@@ -195,10 +198,16 @@ public class MasterDetail_EditableView extends Div implements BeforeEnterObserve
         editorLayoutDiv.add(buttonLayout);
     }
 
+
     private void createGridLayout(SplitLayout splitLayout) {
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.setSizeFull();
+        filters = new Filters(this::refreshGrid);
         Div wrapper = new Div();
+        wrapper.setHeightFull();
         wrapper.setClassName("grid-wrapper");
-        splitLayout.addToPrimary(wrapper);
+        splitLayout.addToPrimary(verticalLayout);
+        verticalLayout.add(filters, wrapper);
         wrapper.add(grid);
     }
 

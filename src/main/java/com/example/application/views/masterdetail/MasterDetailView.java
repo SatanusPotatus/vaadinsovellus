@@ -4,12 +4,13 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 import com.example.application.data.SamplePerson;
 import com.example.application.services.SamplePersonService;
-import com.vaadin.flow.component.button.Button;
+import com.example.application.views.components.Filters;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.data.renderer.LitRenderer;
 import com.vaadin.flow.router.BeforeEnterEvent;
@@ -17,15 +18,14 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 
+import jakarta.annotation.security.RolesAllowed;
+
 @PageTitle("Persons View")
-@Route("/")
-@Menu(order = 0, icon = LineAwesomeIconUrl.COLUMNS_SOLID)
-@RouteAlias("")
-@AnonymousAllowed
+@Route("persons_view")
+@Menu(order = 1, icon = LineAwesomeIconUrl.COLUMNS_SOLID)
+@RolesAllowed("USER")
 @Uses(Icon.class)
 public class MasterDetailView extends Div implements BeforeEnterObserver {
 
@@ -33,13 +33,8 @@ public class MasterDetailView extends Div implements BeforeEnterObserver {
     private final String SAMPLEPERSON_EDIT_ROUTE_TEMPLATE = "/%s/edit";
 
     private final Grid<SamplePerson> grid = new Grid<>(SamplePerson.class, false);
-
-    private final Button cancel = new Button("Cancel");
-    private final Button save = new Button("Save");
-
-
+    private Filters filters;
     private SamplePerson samplePerson;
-
     private final SamplePersonService samplePersonService;
 
     public MasterDetailView(SamplePersonService samplePersonService) {
@@ -70,7 +65,7 @@ public class MasterDetailView extends Div implements BeforeEnterObserver {
 
         grid.addColumn(importantRenderer).setHeader("Important").setAutoWidth(true);
 
-        grid.setItems(query -> samplePersonService.list(VaadinSpringDataHelpers.toSpringPageRequest(query)).stream());
+        grid.setItems(query -> samplePersonService.list(VaadinSpringDataHelpers.toSpringPageRequest(query), filters).stream());
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
 
     }
@@ -80,9 +75,14 @@ public class MasterDetailView extends Div implements BeforeEnterObserver {
     }
 
     private void createGridLayout(SplitLayout splitLayout) {
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.setSizeFull();
+        filters = new Filters(this::refreshGrid);
         Div wrapper = new Div();
+        wrapper.setHeightFull();
         wrapper.setClassName("grid-wrapper");
-        splitLayout.addToPrimary(wrapper);
+        splitLayout.addToPrimary(verticalLayout);
+        verticalLayout.add(filters, wrapper);
         wrapper.add(grid);
     }
 
