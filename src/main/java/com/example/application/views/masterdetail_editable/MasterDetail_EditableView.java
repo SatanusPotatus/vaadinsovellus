@@ -46,7 +46,7 @@ import jakarta.annotation.security.RolesAllowed;
 public class MasterDetail_EditableView extends Div implements BeforeEnterObserver {
 
     private final String SAMPLEPERSON_ID = "samplePersonID";
-    private final String SAMPLEPERSON_EDIT_ROUTE_TEMPLATE = "master-detail_Editable/%s/edit";
+    private final String SAMPLEPERSON_EDIT_ROUTE_TEMPLATE = "admin-persons_view/%s/edit";
 
     private final Grid<SamplePerson> grid = new Grid<>(SamplePerson.class, false);
     private Filters filters;

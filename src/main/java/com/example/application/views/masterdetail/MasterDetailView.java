@@ -2,16 +2,23 @@ package com.example.application.views.masterdetail;
 
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
+import com.example.application.data.Measurement;
 import com.example.application.data.SamplePerson;
 import com.example.application.services.SamplePersonService;
 import com.example.application.views.components.Filters;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.popover.Popover;
+import com.vaadin.flow.component.popover.PopoverPosition;
+import com.vaadin.flow.component.popover.PopoverVariant;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LitRenderer;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -56,6 +63,32 @@ public class MasterDetailView extends Div implements BeforeEnterObserver {
         grid.addColumn("dateOfBirth").setAutoWidth(true);
         grid.addColumn("occupation").setAutoWidth(true);
         grid.addColumn("role").setAutoWidth(true);
+        grid.addColumn(new ComponentRenderer<>((SamplePerson p) -> {
+            if (p.getMeasurements() == null || p.getMeasurements().isEmpty()) {
+                return new Span("No measurements");
+            }
+            Button button = new Button(p.getMeasurements().size() + " Measurements");
+            Popover popover = new Popover();
+            popover.setTarget(button);
+            popover.setWidth("400px");
+            popover.addThemeVariants(PopoverVariant.ARROW, PopoverVariant.LUMO_NO_PADDING);
+            popover.setPosition(PopoverPosition.BOTTOM);
+            popover.setModal(true);
+            popover.setAriaLabel("blood-pressure-readings");
+            VerticalLayout verticalLayout = new VerticalLayout();
+            for (Measurement measurement : p.getMeasurements()) {
+                Span span = new Span("BP: " + measurement.getSystolicPressure() + "/" 
+                    + measurement.getDiastolicPressure() 
+                    + " on " + measurement.getMeasurementDate());
+                verticalLayout.add(span);
+            }
+            
+            popover.add(verticalLayout);
+            popover.setCloseOnOutsideClick(true);
+        
+            return button;
+        })).setAutoWidth(true).setHeader("Blood Pressure Measurements");
+
         LitRenderer<SamplePerson> importantRenderer = LitRenderer.<SamplePerson>of(
                 "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>")
                 .withProperty("icon", important -> important.isImportant() ? "check" : "minus").withProperty("color",

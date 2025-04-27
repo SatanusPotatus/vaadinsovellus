@@ -1,3 +1,6 @@
 {
-  "lumoImports" : [ "typography", "color", "spacing", "badge", "utility" ]
+  "lumo": {
+      "primary-color": "#4CAF50",
+      "font-family": "'Roboto', sans-serif"
+  }
 }

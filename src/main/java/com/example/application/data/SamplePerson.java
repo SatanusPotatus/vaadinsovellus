@@ -1,8 +1,12 @@
 package com.example.application.data;
 
-import jakarta.persistence.Entity;
-import jakarta.validation.constraints.Email;
 import java.time.LocalDate;
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
 
 @Entity
 public class SamplePerson extends AbstractEntity {
@@ -16,6 +20,16 @@ public class SamplePerson extends AbstractEntity {
     private String occupation;
     private String role;
     private boolean important;
+
+    @OneToMany(mappedBy = "samplePerson", fetch = FetchType.EAGER)
+    private List<Measurement> measurements;
+
+    public List<Measurement> getMeasurements() {
+        return measurements;
+    }
+    public void setMeasurements(List<Measurement> measurements) {
+        this.measurements = measurements;
+    }
 
     public String getFirstName() {
         return firstName;
