@@ -1,15 +1,21 @@
 package com.example.application.services;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PageableArgumentResolver;
 import org.springframework.stereotype.Service;
 
 import com.example.application.data.Measurement;
 import com.example.application.data.MeasurementRepository;
 import com.example.application.data.SamplePerson;
 import com.example.application.data.SamplePersonRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import jakarta.transaction.Transactional;
 
@@ -63,5 +69,12 @@ public class MeasurementService {
             measurement.setSamplePerson(person); // Link measurement to person
             measurementRepository.save(measurement); // Save to DB
         }
+    }
+
+    public Page<Measurement> list(Pageable pageable) {
+        return measurementRepository.findAll(pageable);
+    }
+    public Page<Measurement> list(Pageable pageable, Specification<Measurement> filter) {
+        return measurementRepository.findAll(filter, pageable);
     }
 }

@@ -21,7 +21,7 @@ public class SamplePerson extends AbstractEntity {
     private String role;
     private boolean important;
 
-    @OneToMany(mappedBy = "samplePerson", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "samplePerson", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Measurement> measurements;
 
     public List<Measurement> getMeasurements() {

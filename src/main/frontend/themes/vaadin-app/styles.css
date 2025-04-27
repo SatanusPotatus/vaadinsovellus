@@ -1,3 +1,25 @@
 @import url('./main-layout.css');
 @import url('./views/master-detail-view.css');
 @import url('./views/master-detail-editable-view.css');
+
+:root {
+  --lumo-primary-color: #852680; /* Blue color for primary buttons and links */
+  --lumo-body-text-color: #333;  /* Dark gray color for body text */
+  --lumo-font-size-m: 16px;      /* Default font size for medium text */
+  --lumo-font-size-l: 20px;      /* Font size for large text */
+  --lumo-button-border-radius: 0.5em; /* Rounded corners for buttons */
+
+  --lumo-focus-color: #852680; /* Lighter gray focus ring */
+  --lumo-focus-ring: 0 0 0 2px var(--lumo-focus-color); /* Focus ring style */
+  --lumo-focus-text-color: var(--lumo-primary-color); /* Focus text color */
+  --lumo-primary-text-color: var(--lumo-primary-color); /* Primary text color */
+}
+:host {
+    --lumo-focus-color: #a64ca6; /* or whatever purple you want */
+  }
+/* Customize button colors */
+button {
+  background-color: var(--lumo-primary-color);
+  color: rgb(187, 187, 187);
+  border-radius: var(--lumo-button-border-radius);
+}
